@@ -1,2 +1,2 @@
 # flash-card-learning-kmm
-a KMM projetc for mobile client
+a KMM project for mobile client
