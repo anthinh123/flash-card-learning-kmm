@@ -1,0 +1,13 @@
+import kotlin.Boolean;
+
+CREATE TABLE  FlashCard(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    original TEXT NOT NULL,
+    meaning TEXT,
+    urlImage TEXT,
+    urlVoice TEXT,
+    done INTEGER AS Boolean DEFAULT 0
+);
+
+getAllFlashCard:
+SELECT FlashCard.* FROM FlashCard;

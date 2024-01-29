@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    kotlin("plugin.serialization") version "1.9.20"
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -44,7 +46,7 @@ kotlin {
             implementation(libs.ktor.client.darwin)
             implementation(libs.sql.native.driver)
         }
-        
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
@@ -56,5 +58,13 @@ android {
     compileSdk = 34
     defaultConfig {
         minSdk = 24
+    }
+}
+
+sqldelight {
+    databases {
+        create(name = "FlashCardLearningDatabase"){
+            packageName.set("com.thinh.flashcardlearning.db")
+        }
     }
 }
