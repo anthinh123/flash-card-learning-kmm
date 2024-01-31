@@ -6,9 +6,22 @@ import com.thinh.flashcardlearning.flashcard.repository.FlashCardDo
 
 class LocalDataSourceImpl(private val database: FlashCardLearningDatabase) : LocalDataSource {
 
+    val flashCardQueries = database.flashCardLearningDatabaseQueries
+
     override fun getFlashCards(): List<FlashCardDo> {
         return database.flashCardLearningDatabaseQueries.getAllFlashCard(::mapToFlashCardDo)
             .executeAsList()
+    }
+
+    override fun addFlashCard(flashCardDo: FlashCardDo): Boolean {
+        flashCardQueries.insertFlashCard(
+            flashCardDo.original,
+            flashCardDo.meaning,
+            flashCardDo.urlImage,
+            flashCardDo.urlVoice,
+            flashCardDo.done
+        )
+        return true
     }
 
     private fun mapToFlashCardDo(

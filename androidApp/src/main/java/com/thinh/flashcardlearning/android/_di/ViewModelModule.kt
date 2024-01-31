@@ -5,5 +5,5 @@ import com.thinh.flashcardlearning.flashcard.flashcardlist.impl.FlashCardListVie
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { FlashCardListViewModel(get()) }
+    viewModel { FlashCardListViewModel(get(), get()) }
 }

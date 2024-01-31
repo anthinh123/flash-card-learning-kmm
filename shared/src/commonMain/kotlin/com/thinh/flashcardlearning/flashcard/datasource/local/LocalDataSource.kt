@@ -4,4 +4,5 @@ import com.thinh.flashcardlearning.flashcard.repository.FlashCardDo
 
 interface LocalDataSource {
     fun getFlashCards(): List<FlashCardDo>
+    fun addFlashCard(flashCardDo: FlashCardDo): Boolean
 }

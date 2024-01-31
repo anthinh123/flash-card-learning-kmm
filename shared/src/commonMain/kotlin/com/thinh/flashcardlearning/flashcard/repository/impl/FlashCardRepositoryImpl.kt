@@ -25,4 +25,8 @@ class FlashCardRepositoryImpl(
         emit(flashCardDos)
     }
 
+    override suspend fun addFlashCard(flashCardDo: FlashCardDo): Boolean {
+        return localDataSource.addFlashCard(flashCardDo)
+    }
+
 }

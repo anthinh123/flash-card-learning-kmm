@@ -5,6 +5,7 @@ import com.thinh.flashcardlearning.flashcard.domain.FlashCardPo
 import com.thinh.flashcardlearning.flashcard.flashcardlist.Event
 import com.thinh.flashcardlearning.flashcard.flashcardlist.FlashCardListContact
 import com.thinh.flashcardlearning.flashcard.flashcardlist.FlashCardListState
+import com.thinh.flashcardlearning.flashcard.usecase.AddFlashCardUseCase
 import com.thinh.flashcardlearning.flashcard.usecase.GetFlashCardsUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class FlashCardListViewModel(
-    private val getFlashCardsUseCase: GetFlashCardsUseCase
+    private val getFlashCardsUseCase: GetFlashCardsUseCase,
+    private val addFlashCardUseCase: AddFlashCardUseCase
 ) : BaseViewModel(), FlashCardListContact {
 
     private val _flashCardListState: MutableStateFlow<FlashCardListState> =
@@ -28,11 +30,15 @@ class FlashCardListViewModel(
         scope.launch {
             getFlashCardsUseCase.execute(Unit).collect {
                 println("thinhav size of db = ${it.size}")
-                delay(1000)
-                _flashCardListState.emit(FlashCardListState(flashCards = mockData()))
+                if (it.isEmpty()) {
+                    val mockData = mockData()
+                    mockData.forEach {
+                        addFlashCardUseCase.execute(it)
+                    }
+                }
+                _flashCardListState.emit(FlashCardListState(flashCards = it))
             }
         }
-
     }
 
     override fun event(event: Event) {
@@ -56,8 +62,6 @@ class FlashCardListViewModel(
             _flashCardListState.update {
                 it.copy(isLoading = true)
             }
-
-            delay(2000)
             val list = _flashCardListState.value.flashCards.map {
                 if (id == it.id) {
                     it.copy(isDisplayMeaning = !it.isDisplayMeaning)
