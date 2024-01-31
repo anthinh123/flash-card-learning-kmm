@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface FlashCardListContact {
     val flashCardListState: StateFlow<FlashCardListState>
+
+    fun event(event: Event)
 }
 
 data class FlashCardListState(
@@ -12,3 +14,10 @@ data class FlashCardListState(
     val error: String = "",
     val flashCards: List<FlashCardPo> = listOf()
 )
+
+sealed class Event {
+    class OnDoneIconSelected(val id: Long) : Event()
+    class OnSpeakIconSelected(val id: Long) : Event()
+    class OnTranslateIconSelected(val id: Long) : Event()
+}
+

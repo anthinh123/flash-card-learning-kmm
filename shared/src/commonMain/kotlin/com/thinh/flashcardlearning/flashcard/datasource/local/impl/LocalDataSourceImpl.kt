@@ -21,9 +21,9 @@ class LocalDataSourceImpl(private val database: FlashCardLearningDatabase) : Loc
     ) = FlashCardDo(
         id = id,
         original = original,
-        meaning = meaning,
-        urlImage = urlImage,
-        urlVoice = urlVoice,
-        done = done
+        meaning = meaning ?: "",
+        urlImage = urlImage ?: "",
+        urlVoice = urlVoice ?: "",
+        done = done ?: false
     )
 }

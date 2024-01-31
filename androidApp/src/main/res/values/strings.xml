@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">EasyLearning</string>
+
+    <!-- flash card list screen-->
+    <string name="flash_card_list_title">Review Phrase</string>
+    <string name="does_not_has_flash_card">Nothing to show &#128522;. Please try again or add new phrases…</string>
+
+    <!--    add phrase screen-->
+    <string name="add_phrase_title">Add New Phrase</string>
+    <string name="add_phrase_sentence_section_title">Sentence</string>
+    <string name="add_phrase_meaning_section_title">Meaning</string>
+</resources>
