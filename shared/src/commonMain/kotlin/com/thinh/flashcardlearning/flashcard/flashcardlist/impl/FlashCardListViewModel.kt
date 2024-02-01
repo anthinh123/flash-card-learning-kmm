@@ -7,7 +7,6 @@ import com.thinh.flashcardlearning.flashcard.flashcardlist.FlashCardListContact
 import com.thinh.flashcardlearning.flashcard.flashcardlist.FlashCardListState
 import com.thinh.flashcardlearning.flashcard.usecase.AddFlashCardUseCase
 import com.thinh.flashcardlearning.flashcard.usecase.GetFlashCardsUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -29,7 +28,6 @@ class FlashCardListViewModel(
     private fun loadFlashCards() {
         scope.launch {
             getFlashCardsUseCase.execute(Unit).collect {
-                println("thinhav size of db = ${it.size}")
                 if (it.isEmpty()) {
                     val mockData = mockData()
                     mockData.forEach {
