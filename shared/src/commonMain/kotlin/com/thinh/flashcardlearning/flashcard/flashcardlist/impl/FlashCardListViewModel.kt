@@ -22,18 +22,14 @@ class FlashCardListViewModel(
     override val flashCardListState: StateFlow<FlashCardListState> = _flashCardListState
 
     init {
+        println("thinhav FlashCardListViewModel init")
         loadFlashCards()
     }
 
     private fun loadFlashCards() {
         scope.launch {
             getFlashCardsUseCase.execute(Unit).collect {
-                if (it.isEmpty()) {
-                    val mockData = mockData()
-                    mockData.forEach {
-                        addFlashCardUseCase.execute(it)
-                    }
-                }
+                println("thinhav flash card list  = ${it.size}")
                 _flashCardListState.emit(FlashCardListState(flashCards = it))
             }
         }

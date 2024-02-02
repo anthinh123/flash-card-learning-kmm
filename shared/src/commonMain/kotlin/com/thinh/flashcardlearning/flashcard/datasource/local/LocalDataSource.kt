@@ -1,8 +1,9 @@
 package com.thinh.flashcardlearning.flashcard.datasource.local
 
 import com.thinh.flashcardlearning.flashcard.repository.FlashCardDo
+import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
-    fun getFlashCards(): List<FlashCardDo>
+    fun getFlashCards(): Flow<List<FlashCardDo>>
     fun addFlashCard(flashCardDo: FlashCardDo): Boolean
 }

@@ -10,7 +10,9 @@ CREATE TABLE  FlashCard(
 );
 
 getAllFlashCard:
-SELECT FlashCard.* FROM FlashCard;
+SELECT FlashCard.* FROM FlashCard
+ORDER BY id DESC;
+
 
 insertFlashCard:
 INSERT INTO FlashCard(original, meaning, urlImage, urlVoice, done)

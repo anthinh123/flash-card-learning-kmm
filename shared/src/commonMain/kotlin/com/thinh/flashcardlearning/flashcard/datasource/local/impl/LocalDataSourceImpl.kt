@@ -1,17 +1,21 @@
 package com.thinh.flashcardlearning.flashcard.datasource.local.impl
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.thinh.flashcardlearning.db.FlashCardLearningDatabase
 import com.thinh.flashcardlearning.flashcard.datasource.local.LocalDataSource
 import com.thinh.flashcardlearning.flashcard.repository.FlashCardDo
+import comthinhflashcardlearningdb.FlashCard
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class LocalDataSourceImpl(private val database: FlashCardLearningDatabase) : LocalDataSource {
 
-    val flashCardQueries = database.flashCardLearningDatabaseQueries
+    private val flashCardQueries = database.flashCardLearningDatabaseQueries
 
-    override fun getFlashCards(): List<FlashCardDo> {
-        return database.flashCardLearningDatabaseQueries.getAllFlashCard(::mapToFlashCardDo)
-            .executeAsList()
-    }
+    override fun getFlashCards(): Flow<List<FlashCardDo>> =
+        flashCardQueries.getAllFlashCard().asFlow().map { query ->
+            query.executeAsList().map(::mapToFlashCardDo)
+        }
 
     override fun addFlashCard(flashCardDo: FlashCardDo): Boolean {
         flashCardQueries.insertFlashCard(
@@ -24,19 +28,14 @@ class LocalDataSourceImpl(private val database: FlashCardLearningDatabase) : Loc
         return true
     }
 
-    private fun mapToFlashCardDo(
-        id: Long,
-        original: String,
-        meaning: String?,
-        urlImage: String?,
-        urlVoice: String?,
-        done: Boolean?,
-    ) = FlashCardDo(
-        id = id,
-        original = original,
-        meaning = meaning ?: "",
-        urlImage = urlImage ?: "",
-        urlVoice = urlVoice ?: "",
-        done = done ?: false
-    )
+    private fun mapToFlashCardDo(flashCard: FlashCard) = with(flashCard) {
+        FlashCardDo(
+            id = id,
+            original = original,
+            meaning = meaning ?: "",
+            urlImage = urlImage ?: "",
+            urlVoice = urlVoice ?: "",
+            done = done ?: false
+        )
+    }
 }
