@@ -11,9 +11,14 @@ CREATE TABLE  FlashCard(
 
 getAllFlashCard:
 SELECT FlashCard.* FROM FlashCard
+WHERE done = 0
 ORDER BY id DESC;
-
 
 insertFlashCard:
 INSERT INTO FlashCard(original, meaning, urlImage, urlVoice, done)
 VALUES (?, ?, ?,?,?);
+
+updateDoneFlashCard:
+UPDATE FlashCard
+SET done = ?
+WHERE id = ?;

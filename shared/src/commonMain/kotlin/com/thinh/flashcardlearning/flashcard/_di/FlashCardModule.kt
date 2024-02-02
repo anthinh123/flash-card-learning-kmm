@@ -6,6 +6,8 @@ import com.thinh.flashcardlearning.flashcard.repository.FlashCardRepository
 import com.thinh.flashcardlearning.flashcard.repository.impl.FlashCardRepositoryImpl
 import com.thinh.flashcardlearning.flashcard.usecase.AddFlashCardUseCase
 import com.thinh.flashcardlearning.flashcard.usecase.GetFlashCardsUseCase
+import com.thinh.flashcardlearning.flashcard.usecase.UpdateDoneFlashCardUseCase
+import com.thinh.flashcardlearning.flashcard.usecase.im.UpdateDoneFlashCardUseCaseImpl
 import com.thinh.flashcardlearning.flashcard.usecase.impl.AddFlashCardUseCaseImpl
 import com.thinh.flashcardlearning.flashcard.usecase.impl.GetFlashCardsUseCaseImpl
 import org.koin.dsl.module
@@ -15,4 +17,5 @@ val flashCardModule = module {
     single<FlashCardRepository> { FlashCardRepositoryImpl(get()) }
     single<GetFlashCardsUseCase> { GetFlashCardsUseCaseImpl(get()) }
     single<AddFlashCardUseCase> { AddFlashCardUseCaseImpl(get()) }
+    single<UpdateDoneFlashCardUseCase> { UpdateDoneFlashCardUseCaseImpl(get()) }
 }

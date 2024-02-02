@@ -7,6 +7,7 @@ import com.thinh.flashcardlearning.flashcard.flashcardlist.FlashCardListContact
 import com.thinh.flashcardlearning.flashcard.flashcardlist.FlashCardListState
 import com.thinh.flashcardlearning.flashcard.usecase.AddFlashCardUseCase
 import com.thinh.flashcardlearning.flashcard.usecase.GetFlashCardsUseCase
+import com.thinh.flashcardlearning.flashcard.usecase.UpdateDoneFlashCardUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class FlashCardListViewModel(
     private val getFlashCardsUseCase: GetFlashCardsUseCase,
-    private val addFlashCardUseCase: AddFlashCardUseCase
+    private val updateDoneFlashCardUseCase: UpdateDoneFlashCardUseCase
 ) : BaseViewModel(), FlashCardListContact {
 
     private val _flashCardListState: MutableStateFlow<FlashCardListState> =
@@ -29,7 +30,6 @@ class FlashCardListViewModel(
     private fun loadFlashCards() {
         scope.launch {
             getFlashCardsUseCase.execute(Unit).collect {
-                println("thinhav flash card list  = ${it.size}")
                 _flashCardListState.emit(FlashCardListState(flashCards = it))
             }
         }
@@ -70,7 +70,14 @@ class FlashCardListViewModel(
     }
 
     private fun updatePhraseIsDone(id: Long, isDone: Boolean) {
-
+        scope.launch {
+            updateDoneFlashCardUseCase.execute(
+                UpdateDoneFlashCardUseCase.Input(
+                    id = id,
+                    isDone = isDone
+                )
+            )
+        }
     }
 
     private fun mockData(): List<FlashCardPo> = listOf(

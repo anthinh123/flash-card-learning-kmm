@@ -28,6 +28,11 @@ class LocalDataSourceImpl(private val database: FlashCardLearningDatabase) : Loc
         return true
     }
 
+    override fun updateDoneFlashCard(id: Long, isDone: Boolean): Boolean {
+        flashCardQueries.updateDoneFlashCard(done = isDone, id = id)
+        return true
+    }
+
     private fun mapToFlashCardDo(flashCard: FlashCard) = with(flashCard) {
         FlashCardDo(
             id = id,
