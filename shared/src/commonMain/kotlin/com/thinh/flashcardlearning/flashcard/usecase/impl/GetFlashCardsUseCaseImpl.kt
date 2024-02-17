@@ -1,7 +1,7 @@
 package com.thinh.flashcardlearning.flashcard.usecase.impl
 
 import com.thinh.flashcardlearning.flashcard.domain.FlashCardPo
-import com.thinh.flashcardlearning.flashcard.repository.FlashCardDo
+import com.thinh.flashcardlearning.flashcard.datasource.model.FlashCardDo
 import com.thinh.flashcardlearning.flashcard.repository.FlashCardRepository
 import com.thinh.flashcardlearning.flashcard.usecase.GetFlashCardsUseCase
 import kotlinx.coroutines.flow.Flow

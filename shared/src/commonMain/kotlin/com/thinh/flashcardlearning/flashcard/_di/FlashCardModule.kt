@@ -1,7 +1,9 @@
 package com.thinh.flashcardlearning.flashcard._di
 
+import com.thinh.flashcardlearning.flashcard.addingflashcard.impl.AddingFlashCardViewModel
 import com.thinh.flashcardlearning.flashcard.datasource.local.LocalDataSource
 import com.thinh.flashcardlearning.flashcard.datasource.local.impl.LocalDataSourceImpl
+import com.thinh.flashcardlearning.flashcard.flashcardlist.impl.FlashCardListViewModel
 import com.thinh.flashcardlearning.flashcard.repository.FlashCardRepository
 import com.thinh.flashcardlearning.flashcard.repository.impl.FlashCardRepositoryImpl
 import com.thinh.flashcardlearning.flashcard.usecase.AddFlashCardUseCase
@@ -18,4 +20,7 @@ val flashCardModule = module {
     single<GetFlashCardsUseCase> { GetFlashCardsUseCaseImpl(get()) }
     single<AddFlashCardUseCase> { AddFlashCardUseCaseImpl(get()) }
     single<UpdateDoneFlashCardUseCase> { UpdateDoneFlashCardUseCaseImpl(get()) }
+
+    single<FlashCardListViewModel> { FlashCardListViewModel(get(), get()) }
+    single<AddingFlashCardViewModel> { AddingFlashCardViewModel(get()) }
 }

@@ -1,6 +1,6 @@
 package com.thinh.flashcardlearning.flashcard.datasource.local
 
-import com.thinh.flashcardlearning.flashcard.repository.FlashCardDo
+import com.thinh.flashcardlearning.flashcard.datasource.model.FlashCardDo
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {

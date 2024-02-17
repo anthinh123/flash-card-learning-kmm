@@ -10,6 +10,8 @@ import com.thinh.flashcardlearning.flashcard.usecase.GetFlashCardsUseCase
 import com.thinh.flashcardlearning.flashcard.usecase.UpdateDoneFlashCardUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -23,14 +25,19 @@ class FlashCardListViewModel(
     override val flashCardListState: StateFlow<FlashCardListState> = _flashCardListState
 
     init {
-        println("thinhav FlashCardListViewModel init")
         loadFlashCards()
     }
 
     private fun loadFlashCards() {
         scope.launch {
             getFlashCardsUseCase.execute(Unit).collect {
-                _flashCardListState.emit(FlashCardListState(flashCards = it))
+                if (it.isEmpty()) {
+                    _flashCardListState.emit(FlashCardListState(flashCards = mockData()))
+                } else {
+                    _flashCardListState.emit(FlashCardListState(flashCards = it))
+                }
+            }.runCatching {
+                _flashCardListState.emit(FlashCardListState(error = "Something went wrong"))
             }
         }
     }

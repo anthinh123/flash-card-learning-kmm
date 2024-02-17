@@ -1,6 +1,6 @@
 package com.thinh.flashcardlearning.flashcard.domain
 
-import com.thinh.flashcardlearning.flashcard.repository.FlashCardDo
+import com.thinh.flashcardlearning.flashcard.datasource.model.FlashCardDo
 
 data class FlashCardPo(
     val id: Long,

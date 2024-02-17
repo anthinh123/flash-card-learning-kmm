@@ -58,7 +58,6 @@ fun FlashCardListScreen(
     navigateToAddingFlashCardScreen: () -> Unit
 ) {
 
-    println("thinhav FlashCardListScreen")
     val uiState = viewModel.flashCardListState.collectAsState()
 
     Scaffold(

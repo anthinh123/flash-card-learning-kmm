@@ -1,11 +1,15 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    kotlin("plugin.serialization") version "1.9.20"
+    id("co.touchlab.skie") version "0.6.1"
+    kotlin("plugin.serialization") version "1.9.21"
     alias(libs.plugins.sqlDelight)
 }
 
+@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    targetHierarchy.default()
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -21,7 +25,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            isStatic = true
+//            isStatic = true
         }
     }
 

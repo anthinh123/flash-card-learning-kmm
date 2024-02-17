@@ -1,4 +1,4 @@
-package com.thinh.flashcardlearning.flashcard.repository
+package com.thinh.flashcardlearning.flashcard.datasource.model
 
 data class FlashCardDo(
     val id: Long,

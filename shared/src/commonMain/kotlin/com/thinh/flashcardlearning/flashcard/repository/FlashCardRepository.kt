@@ -1,5 +1,6 @@
 package com.thinh.flashcardlearning.flashcard.repository
 
+import com.thinh.flashcardlearning.flashcard.datasource.model.FlashCardDo
 import kotlinx.coroutines.flow.Flow
 
 interface FlashCardRepository {

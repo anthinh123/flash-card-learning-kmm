@@ -3,7 +3,7 @@ package com.thinh.flashcardlearning.flashcard.datasource.local.impl
 import app.cash.sqldelight.coroutines.asFlow
 import com.thinh.flashcardlearning.db.FlashCardLearningDatabase
 import com.thinh.flashcardlearning.flashcard.datasource.local.LocalDataSource
-import com.thinh.flashcardlearning.flashcard.repository.FlashCardDo
+import com.thinh.flashcardlearning.flashcard.datasource.model.FlashCardDo
 import comthinhflashcardlearningdb.FlashCard
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
