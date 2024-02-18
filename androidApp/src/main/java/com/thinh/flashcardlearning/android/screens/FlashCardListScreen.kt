@@ -90,7 +90,6 @@ fun FlashCardListScreen(
             }
 
             if (uiState.value.flashCards.isNotEmpty()) {
-                println("thinhav uiState.value.flashCards")
                 FlashCardListContent(
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     flashCardPos = uiState.value.flashCards,

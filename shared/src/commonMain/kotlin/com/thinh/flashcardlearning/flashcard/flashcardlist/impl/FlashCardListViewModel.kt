@@ -31,11 +31,7 @@ class FlashCardListViewModel(
     private fun loadFlashCards() {
         scope.launch {
             getFlashCardsUseCase.execute(Unit).collect {
-                if (it.isEmpty()) {
-                    _flashCardListState.emit(FlashCardListState(flashCards = mockData()))
-                } else {
-                    _flashCardListState.emit(FlashCardListState(flashCards = it))
-                }
+                _flashCardListState.emit(FlashCardListState(flashCards = it))
             }.runCatching {
                 _flashCardListState.emit(FlashCardListState(error = "Something went wrong"))
             }
@@ -63,6 +59,7 @@ class FlashCardListViewModel(
             _flashCardListState.update {
                 it.copy(isLoading = true)
             }
+            println("handleTranslateIconSelected " + _flashCardListState.value.flashCards.size)
             val list = _flashCardListState.value.flashCards.map {
                 if (id == it.id) {
                     it.copy(isDisplayMeaning = !it.isDisplayMeaning)
@@ -110,7 +107,7 @@ class FlashCardListViewModel(
         ),
         FlashCardPo(
             id = 5,
-            original = "Fortunately, I have been employed as a software engineer for a food company in our city and I have been working here for nearly 3 weeks ",
+            original = "Fortunately, I have been employed as a software engineer for a food company in our city and I have been working here for nearly 3 weeks. I am so happy about that. \n Again, I have been working here for nearly 3 weeks. I am so happy about that.",
             meaning = "May mắn là tớ đã được tuyển dụng làm kỹ sư phần mềm cho một công ty thực phẩm của thành phố chúng ta và tớ đã làm việc ở đây được gần 3 tuần rồi.",
         ),
         FlashCardPo(
@@ -119,4 +116,8 @@ class FlashCardListViewModel(
             meaning = "thật tốt quá. Nó có khác gì nhiều so với công việc trước không?",
         )
     )
+
+    fun testClick() {
+        println("testClick")
+    }
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,8 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		253024A22B7C96C600571781 /* FlashCardListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253024A12B7C96C600571781 /* FlashCardListScreen.swift */; };
+		254902072B82029F0050EFE1 /* SwiftUIPager in Frameworks */ = {isa = PBXBuildFile; productRef = 254902062B82029F0050EFE1 /* SwiftUIPager */; };
+		254902092B821AF40050EFE1 /* AddingFlashCardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254902082B821AF40050EFE1 /* AddingFlashCardScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,7 @@
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		253024A12B7C96C600571781 /* FlashCardListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardListScreen.swift; sourceTree = "<group>"; };
+		254902082B821AF40050EFE1 /* AddingFlashCardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingFlashCardScreen.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -40,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				254902072B82029F0050EFE1 /* SwiftUIPager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				253024A12B7C96C600571781 /* FlashCardListScreen.swift */,
+				254902082B821AF40050EFE1 /* AddingFlashCardScreen.swift */,
 			);
 			path = screens;
 			sourceTree = "<group>";
@@ -116,6 +121,9 @@
 			dependencies = (
 			);
 			name = iosApp;
+			packageProductDependencies = (
+				254902062B82029F0050EFE1 /* SwiftUIPager */,
+			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
 			productType = "com.apple.product-type.application";
@@ -144,6 +152,9 @@
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
+			packageReferences = (
+				254902052B82029F0050EFE1 /* XCRemoteSwiftPackageReference "SwiftUIPager" */,
+			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -192,6 +203,7 @@
 			files = (
 				253024A22B7C96C600571781 /* FlashCardListScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				254902092B821AF40050EFE1 /* AddingFlashCardScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +406,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		254902052B82029F0050EFE1 /* XCRemoteSwiftPackageReference "SwiftUIPager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fermoya/SwiftUIPager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		254902062B82029F0050EFE1 /* SwiftUIPager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 254902052B82029F0050EFE1 /* XCRemoteSwiftPackageReference "SwiftUIPager" */;
+			productName = SwiftUIPager;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

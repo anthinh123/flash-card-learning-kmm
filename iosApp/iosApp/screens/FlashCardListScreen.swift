@@ -8,6 +8,7 @@
 //
 import SwiftUI
 import shared
+import SwiftUIPager
 
 extension FlashCardListScreen {
     @MainActor
@@ -33,50 +34,54 @@ extension FlashCardListScreen {
 
 struct FlashCardListScreen: View {
     @ObservedObject private(set) var viewModel : FlashCardListViewModelWrapper
+    @StateObject var page: Page = .first()
+    @State private var showAddingFlashCardScreen = false
     
     var body: some View {
-        VStack {
-            AppBar()
-            
-            if (viewModel.uiState.isLoading){
-                Loader()
-            }
-            
-            if (!viewModel.uiState.error.isEmpty){
-                ErrorMessage(message: viewModel.uiState.error)
-            }
-            
-            if (!viewModel.uiState.flashCards.isEmpty){
-                let _ = print(" size = \(viewModel.uiState.flashCards.count)")
-                //                ScrollView(.horizontal) {
-                //                    LazyHStack(spacing: 32) {
-                //                        ForEach(viewModel.uiState.flashCards, id: \.self.id) { flashCardPo in
-                //                            CardView(text: flashCardPo.original)
-                //                        }
-                //                    }
-                //                }
-                
-                TabView{
-                    ForEach(viewModel.uiState.flashCards, id: \.self.id) { flashCardPo in
-                        CardView(text: flashCardPo.original)
+        NavigationStack {
+            ZStack {
+                if (!viewModel.uiState.flashCards.isEmpty){
+                    VStack {
+                        Pager(page: page, data: viewModel.uiState.flashCards, id: \.self.id, content: { flashCardPo in
+                            let displayText = flashCardPo.isDisplayMeaning ? flashCardPo.meaning : flashCardPo.original
+                            CardView(text: displayText)
+                                .padding(.horizontal, 32)
+                                .padding(.vertical, 32)
+                        })
+                        
+                        UsefulView(
+                            clickToDone: {},
+                            clickToSpeaker: {},
+                            clickToTranslate: {
+                                viewModel.flashCardListViewModel.event(event:Event.OnTranslateIconSelected(id:viewModel.uiState.flashCards[page.index].id))
+                            }
+                        )
                     }
-                }.tabViewStyle(.page(indexDisplayMode: .never))
-                .indexViewStyle(.page(backgroundDisplayMode: .always))
-            } else {
-                let _ = print(" EMPTY")
+                } else {
+                    let _ = print("EMPTY")
+                }
+                
+                if (viewModel.uiState.isLoading){
+                    Loader()
+                }
+                
+                if (!viewModel.uiState.error.isEmpty){
+                    ErrorMessage(message: viewModel.uiState.error)
+                }
+                
+            }.onAppear{
+                self.viewModel.startObserving()
             }
-            
-        }.onAppear{
-            self.viewModel.startObserving()
+            .navigationBarTitle("Flash Card", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing,
+                            content: { Button(action: { showAddingFlashCardScreen = true },
+                                              label: { Image(systemName: "plus") }) })
+            }
+            .navigationDestination(isPresented: $showAddingFlashCardScreen) {
+                AddingFlashCardScreen(viewModel: .init()).toolbarRole(.editor)
+            }
         }
-    }
-}
-
-struct AppBar: View {
-    var body: some View {
-        Text("Flash Card")
-            .font(.largeTitle)
-            .fontWeight(.bold)
     }
 }
 
@@ -99,20 +104,69 @@ struct CardView : View {
     let text : String
     
     var body: some View {
-        ZStack {
+        ZStack() {
             RoundedRectangle(cornerRadius: 25, style: .continuous)
                 .fill(.mint)
             
-            VStack {
-                Text(text)
-                    .font(.largeTitle)
-                    .foregroundColor(.black)
+            GeometryReader { geometry in
+                ScrollView(.vertical) {
+                    VStack {
+                        Text(text)
+                            .font(.largeTitle)
+                            .frame(maxWidth: 400)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding()
+                    .frame(width: geometry.size.width)      // Make the scroll view full-width
+                    .frame(minHeight: geometry.size.height) // Set the content’s min height to the parent
+                }
             }
-            .padding(20)
-            .multilineTextAlignment(.center)
         }
-        .frame(width: UIScreen.main.bounds.size.width - 32, height: .infinity)
-        .padding(.vertical, 32)
+    }
+}
+
+struct UsefulView : View {
+    let clickToDone : () -> Void
+    let clickToSpeaker : () -> Void
+    let clickToTranslate : () -> Void
+    
+    var body: some View {
+        HStack (alignment: .center, spacing: 10){
+            Button() {
+                self.clickToDone()
+            } label: {
+                Image(systemName: "checkmark")
+                    .resizable()
+                    .frame(width: 40.0, height: 40.0)
+                    .foregroundColor(.black)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
+            }.frame(maxWidth: .infinity)
+            
+            Button() {
+                self.clickToSpeaker()
+            } label: {
+                Image(systemName: "speaker.wave.2.fill")
+                    .resizable()
+                    .frame(width: 40.0, height: 40.0)
+                    .foregroundColor(.black)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
+            }.frame(maxWidth: .infinity)
+            
+            Button() {
+                self.clickToTranslate()
+            } label: {
+                Image(systemName: "rectangle.2.swap")
+                    .resizable()
+                    .frame(width: 40.0, height: 40.0)
+                    .foregroundColor(.black)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
+            }.frame(maxWidth: .infinity)
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 12)
     }
 }
 

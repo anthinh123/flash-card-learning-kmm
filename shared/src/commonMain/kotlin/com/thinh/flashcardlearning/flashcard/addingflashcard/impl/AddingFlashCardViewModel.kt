@@ -29,7 +29,6 @@ class AddingFlashCardViewModel(
     private fun addNewFlashCard() {
         scope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            delay(1000)
 
             val original = _uiState.value.flashCardPo.original
             val meaning = _uiState.value.flashCardPo.meaning

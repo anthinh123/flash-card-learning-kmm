@@ -15,7 +15,7 @@ interface AddingFlashCardContact : BaseMviContract<AddingFlashCardUiState, Event
     )
 
     sealed class Event {
-        object OnSave : Event()
+        data object OnSave : Event()
 
         class SetOriginalContent(val original: String) : Event()
 
